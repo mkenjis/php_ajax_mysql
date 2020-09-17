@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  pyapp:
+    image: my_phpapp
+    build: .
+    ports:
+      - '8000:80'
+    volumes:
+      - /root/php_apache_mysql:/var/www/html
+    networks:
+      - net1
+    depends_on:
+      - db
+  db:
+    image: mysql:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - /root/data-dir:/var/lib/mysql
+    networks:
+      - net1
+
+networks:
+  net1:
+    driver: bridge
+
